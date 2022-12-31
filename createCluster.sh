@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/sh
 
 echo 'Master VM is being created'
 
