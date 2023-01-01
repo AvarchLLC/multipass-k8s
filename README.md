@@ -33,7 +33,7 @@ multipass shell master
 ## execute from master node
 
 ```
-https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/Screenshot%20from%202022-12-30%2022-38-41.png
+kubectl get nodes -o wide
 ```
 
 ![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/Screenshot%20from%202022-12-30%2022-38-41.png)
