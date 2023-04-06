@@ -14,13 +14,17 @@ This script is tested on ubuntu 22.04.1
 wget https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/createCluster.sh && chmod +x  createCluster.sh &&  ./createCluster.sh
 ```
 
+## Choose CNI
+
+![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/1.png)
+
 ## List down vms to verify
 
 ```
 multipass list
 ```
 
-![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/Screenshot%20from%202022-12-30%2022-36-00.png)
+![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/listvms4.png)
 
 ## login to master node
 
@@ -28,7 +32,7 @@ multipass list
 multipass shell master
 ```
 
-![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/Screenshot%20from%202022-12-30%2022-37-52.png)
+![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/3.png)
 
 ## execute from master node
 
@@ -36,4 +40,12 @@ multipass shell master
 kubectl get nodes -o wide
 ```
 
-![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/Screenshot%20from%202022-12-30%2022-38-41.png)
+![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/4.png)
+
+## execute from master node
+
+```
+kubectl get pods -A -o wide
+```
+
+![system schema](https://raw.githubusercontent.com/Avarch-org/multipass-k8s/main/5.png)

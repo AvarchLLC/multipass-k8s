@@ -1,4 +1,11 @@
 #!/bin/sh
+echo "Please select a CNI provider"
+echo -n "Enter 1 for Calico, Enter 2 for Flannel, Enter 3 for Weave " 
+echo "Please choose:"
+echo "1. Calico"
+echo "2. Flannel"
+echo "3. Weave"
+read cni
 
 echo 'Master VM is being created'
 
@@ -68,7 +75,7 @@ done
 
 
  multipass exec master -- bash <<EOF
-    sudo kubeadm init --control-plane-endpoint=master.k.net
+    sudo kubeadm init --control-plane-endpoint=master.k.net --pod-network-cidr=10.244.0.0/16
     mkdir -p /home/ubuntu/.kube
     sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
     sudo chown $(id -u):$(id -g) /home/ubuntu/.kube/config
@@ -86,10 +93,18 @@ EOF
 EOF
 
  multipass exec master -- bash <<EOF
+    
+    if [ $cni = "1" ]; then
     kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+    elif [ $cni = "2" ]; then
+    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    else
+    kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+    fi
+
 EOF
 
-
-
-
-    
+multipass exec master -- bash <<EOF
+    kubectl label node node1.k.net node-role.kubernetes.io/worker=worker
+    kubectl label node node2.k.net node-role.kubernetes.io/worker=worker
+EOF
